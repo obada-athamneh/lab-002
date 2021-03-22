@@ -1,0 +1,54 @@
+section {
+    position: relative;
+    width: 200px;
+    height: 220px;
+    float: left;
+}
+#photo-template {
+    display: none;
+}
+section img {
+    position: absolute;
+    width: 150px;
+    left: 50%;
+    margin-left: -75px;
+    top: 25px;
+}
+h2 {
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    text-align: center;
+}
+p{
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+}
+h1 {
+    position: relative;
+    width: 480px;
+    font-size: 50px;
+    font-weight: bolder;
+    left: 40px;
+    top: 10px;
+}
+main {
+    width: 820px;
+    height: auto;
+    margin: 40px auto;
+}
+footer {
+    padding-top: 50px;
+    margin-bottom: 50px;
+    clear: both;
+}
+select {
+    position: relative;
+    width: 150px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    left: 50%;
+    margin-left: -75px;
+}
