@@ -1,67 +1,72 @@
-'use strict';
-let objArr = [];
-let keyWord = [];
-let inx = 0;
-function Animals(img, title, des, key, horns){
-    this.img = img;
-    this.title = title;
-    this.des = des;
-    this.key = key;
-    this.horns = horns;
-    this.id = inx;
-    objArr.push(this)
-}
-let container;
-Animals.prototype.renderAll = function() {
-    container = $('#photo-template').clone();
-    $('main').append(container);
-    container.find('h2').text(this.title);
-    container.find('img').attr('src',this.img);
-    container.find('p').text(this.key);
-    container.removeAttr('id');
-    container.attr('id', this.id);
-    inx++;
-}
-Animals.prototype.addOption = function(){ 
-    if (keyWord.includes(this.key)){
+"use strict";
+let dogs =[];
+function Dog(dog) {
+  this.title = dog.title;
+  this.image_url = dog.image_url;
+  this.description = dog.description;
+  this.keyword = dog.keyword;
+  this.horns= dog.horns;
+  dogs.push(this);
 
-    }else{
-        keyWord.push(this.key)
-        let newOption = $('<option></option>');
-        $('#select').append(newOption);
-        newOption.text(this.key);
-}}
-
-function renderSelect () {
-    $('#select').on('click', function(){
-        for (let i = 0; i<inx; i++){
-            if (objArr[i].key == $('#select').val()) {
-                $('#'+i).show();
-            }else{
-                if($('#select').val() == 'default'){
-                    $('#'+i).show();
-                }else{
-                $('#'+i).hide();
-            }}
-        }
-    })
 }
 
 
-function getData() {
-    const ajaxSettings = {
-        method: 'get',
-        dataType: 'json'
-    };
-    $.ajax('data/page-1.json', ajaxSettings).then( data => {
-        data.forEach(element => {
-            let newAnimal = new Animals(element.image_url, element.title, element.description, element.keyword, element.horns);
-            newAnimal.renderAll();
-            newAnimal.addOption();
-        });
+
+// Using a clone
+Dog.prototype.cloneRender = function () {
+  let clonedSection = $("#photo-template").clone();
+  clonedSection.find("h2").text(this.title);
+  clonedSection.find("p").text(this.description);
+  clonedSection.find("img").attr("src", this.image_url);
+  clonedSection.removeClass("#photo-template");
+  clonedSection.attr("id", this.title);
+  $("main").append(clonedSection);
+};
+
+let keywords = [];
+Dog.prototype.option = function(){
+    if (!keywords.includes(this.keyword)){
+        keywords.push(this.keyword)
+    } 
+}
+
+function renderSelect (){
+    for(let i =0 ; i < keywords.length ; i++){
+        let optionEl = $("<option></option>");
+        optionEl.text(keywords[i]);
+        optionEl.attr("value", keywords[i]);
+        $("#select").append(optionEl);
+
     }
-    
-    )}
+}
 
-$('document').ready(getData);
-renderSelect();
+
+
+const ajaxSettings = {
+  method: "get",
+  dataType: "json",
+};
+
+$.ajax("data/page-1.json", ajaxSettings).then((data) => {
+  data.forEach((dog) => {
+    let dogObject = new Dog(dog);
+
+    // render the create dog object
+    // dogObject.renderManually();
+    dogObject.cloneRender();
+    dogObject.option();
+  });
+  renderSelect();
+
+  $("#select").on("change", function (event){
+     let keyword= event.target.value;
+     console.log(keyword);
+    $("main").empty();
+    for(let i = 0; i < dogs.length ; i++){
+        if (dogs[i].keyword === keyword){
+            console.log(dogs[i].keyword === keyword);
+            dogs[i].cloneRender();
+        }
+    }
+  })
+});
