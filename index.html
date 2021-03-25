@@ -16,8 +16,8 @@
         <option value="default">Filter by Keyword</option>
       </select>
     </header>
-    <button id="json-1">json-1</button>
-    <button id="json-2">json-2</button>
+    <button id="json-1" onclick="selectFile()">json-1</button>
+    <button id="json-2" onclick="selectFile2()">json-2</button>
     <select id="sort">
       <option value="title" selected>title</option>
       <option value="Keyword">Keyword</option>
@@ -25,11 +25,14 @@
     <main>
      
     </main>
-    <section id="photo-template">
-    <h2></h2>
-    <img src="" alt="">
-    <p></p>
-  </section>
+    <template id="photo-template" type="text/x-tmpl-mustache" >
+      <section id="40">
+    <h2>{{title}}</h2>
+    <img src="{{image_url}}" alt=""/>
+    <p>{{description}}</p>
+    <p>{{horns}}</p>
+        </section>
+  </template>
     <footer>
       &copy; 2018 Code Fellows
     </footer>
